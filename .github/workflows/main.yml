@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -29,7 +29,6 @@ jobs:
       - name: Build and run Docker Compose
         run: |
           docker-compose up --build -d
-          docker-compose ps
         env:
           SPRING_PROFILES_ACTIVE: default
           DATABASE_URL: jdbc:postgresql://postgres:5432/blog-rest-api
