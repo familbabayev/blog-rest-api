@@ -4,6 +4,7 @@ import com.example.blogrestapi.dto.PostDto;
 import com.example.blogrestapi.entity.Post;
 import com.example.blogrestapi.exception.ResourceNotFoundException;
 import com.example.blogrestapi.repository.PostRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +15,11 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
-    public PostServiceImpl(PostRepository postRepository) {
+    private final ModelMapper modelMapper;
+
+    public PostServiceImpl(PostRepository postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> getAllPosts() {
         List<Post> posts = postRepository.findAll();
-        return posts.stream().map(post -> mapToDto(post)).collect(Collectors.toList());
+        return posts.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
     @Override
@@ -61,20 +65,10 @@ public class PostServiceImpl implements PostService {
     }
 
     private PostDto mapToDto(Post post) {
-        PostDto postDto = new PostDto();
-        postDto.setId(post.getId());
-        postDto.setTitle(post.getTitle());
-        postDto.setContent(post.getContent());
-        postDto.setDescription(post.getDescription());
-        return postDto;
+        return modelMapper.map(post, PostDto.class);
     }
 
     private Post mapToEntity(PostDto postDto) {
-        Post post = new Post();
-        post.setId(postDto.getId());
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
-        post.setDescription(postDto.getDescription());
-        return post;
+        return modelMapper.map(postDto, Post.class);
     }
 }
