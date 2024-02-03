@@ -1,6 +1,7 @@
 package com.example.blogrestapi.controller;
 
 import com.example.blogrestapi.dto.PostDto;
+import com.example.blogrestapi.dto.PostResponse;
 import com.example.blogrestapi.service.PostService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,17 +43,30 @@ class PostControllerTest {
 
     @Test
     void getAllPosts() throws Exception {
-        Mockito.when(postService.getAllPosts()).thenReturn(List.of(postDto));
+        Mockito.when(postService.getAllPosts(0, 10, "id", "asc"))
+                .thenReturn(PostResponse.builder()
+                        .content(List.of(postDto))
+                        .pageNo(0)
+                        .pageSize(10)
+                        .totalElements(1)
+                        .totalPages(1)
+                        .last(true)
+                        .build());
 
-        mockMvc.perform(get("/api/posts")
+
+        mockMvc.perform(get("/api/posts?pageNo=0&pageSize=10&sortBy=id&sortDir=asc")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].title").value("Test Title"))
-                .andExpect(jsonPath("$[0].content").value("Test Content"))
-                .andExpect(jsonPath("$[0].description").value("Test Description"));
+                .andExpect(jsonPath("$.content[0].id").value(1L))
+                .andExpect(jsonPath("$.content[0].title").value("Test Title"))
+                .andExpect(jsonPath("$.content[0].content").value("Test Content"))
+                .andExpect(jsonPath("$.content[0].description").value("Test Description"))
+                .andExpect(jsonPath("$.pageNo").value(0))
+                .andExpect(jsonPath("$.pageSize").value(10))
+                .andExpect(jsonPath("$.totalElements").value(1))
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.last").value(true));
     }
-
 
     @Test
     void getPostById() throws Exception {
