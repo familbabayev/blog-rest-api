@@ -4,6 +4,7 @@ import com.example.blogrestapi.dto.PostDto;
 import com.example.blogrestapi.dto.PostResponse;
 import com.example.blogrestapi.service.PostService;
 import com.example.blogrestapi.utils.AppConstants;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.createPost(postDto));
     }
 
@@ -42,7 +43,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable("id") Long id) {
+    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable("id") Long id) {
         return ResponseEntity.ok(postService.updatePost(postDto, id));
     }
 
@@ -51,6 +52,5 @@ public class PostController {
         postService.deletePostById(id);
         return ResponseEntity.ok("Post deleted successfully!");
     }
-
 
 }
