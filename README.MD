@@ -3,6 +3,7 @@
 ![workflow](https://github.com/familbabayev/blog-rest-api/actions/workflows/main.yml/badge.svg)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=familbabayev_blog-rest-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=familbabayev_blog-rest-api)
 ![Known Vulnerabilities](https://snyk.io/test/github/familbabayev/blog-rest-api/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 #### Description
 
