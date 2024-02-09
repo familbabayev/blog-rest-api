@@ -32,7 +32,7 @@ REST API for a blogging app developed using Sprint Boot.
    docker-compose up
    ```
 3. Application will be available at `http://localhost:8080`
-4. Swagger UI will be available at `http://localhost:8080/swagger-ui.html`
+4. Swagger UI will be available at `http://localhost:8080/swagger-ui/index.html`
 
 ### License
 
