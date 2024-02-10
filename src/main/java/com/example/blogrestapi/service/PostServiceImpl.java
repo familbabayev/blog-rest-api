@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -47,7 +46,7 @@ public class PostServiceImpl implements PostService {
 
         List<Post> listOfPosts = posts.getContent();
 
-        List<PostDto> content = listOfPosts.stream().map(this::mapToDto).collect(Collectors.toList());
+        List<PostDto> content = listOfPosts.stream().map(this::mapToDto).toList();
 
         PostResponse postResponse = new PostResponse();
         postResponse.setContent(content);

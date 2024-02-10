@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -46,7 +45,7 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentDto> getCommentsByPostId(Long postId) {
         List<Comment> comments = commentRepository.findByPostId(postId);
 
-        return comments.stream().map(this::mapToDto).collect(Collectors.toList());
+        return comments.stream().map(this::mapToDto).toList();
     }
 
     @Override
