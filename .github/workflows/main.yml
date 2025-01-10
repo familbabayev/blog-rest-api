@@ -28,7 +28,7 @@ jobs:
 
       - name: Build and run Docker Compose
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
         env:
           SPRING_PROFILES_ACTIVE: default
           DATABASE_URL: jdbc:postgresql://postgres:5432/blog-rest-api
