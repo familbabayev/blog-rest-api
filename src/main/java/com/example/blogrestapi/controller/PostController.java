@@ -27,32 +27,32 @@ public class PostController {
     }
 
     @GetMapping
-    public PostResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,
+    public PostResponse getAllPosts(@RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER,
             required = false) int pageNo,
-                                    @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE,
+                                    @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE,
                                             required = false) int pageSize,
-                                    @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY,
+                                    @RequestParam(defaultValue = AppConstants.DEFAULT_SORT_BY,
                                             required = false) String sortBy,
-                                    @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIR,
+                                    @RequestParam(defaultValue = AppConstants.DEFAULT_SORT_DIR,
                                             required = false) String sortDir) {
 
         return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostDto> getPostById(@PathVariable("id") Long postId) {
-        return ResponseEntity.ok(postService.getPostById(postId));
+    public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable("id") Long id) {
+    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable Long id) {
         return ResponseEntity.ok(postService.updatePost(postDto, id));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deletePost(@PathVariable Long id) {
         postService.deletePostById(id);
         return ResponseEntity.ok("Post deleted successfully!");
     }
