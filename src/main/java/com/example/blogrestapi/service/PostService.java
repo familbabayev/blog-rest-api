@@ -8,7 +8,7 @@ public interface PostService {
 
     PostResponse getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir);
 
-    PostDto getPostById(Long postId);
+    PostDto getPostById(Long id);
 
     PostDto updatePost(PostDto postDto, Long id);
 
