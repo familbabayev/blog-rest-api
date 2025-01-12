@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'openjdk'
           cache: maven
 
       - name: Build with Maven
@@ -26,11 +26,11 @@ jobs:
           chmod +x mvnw
           ./mvnw clean install -DskipTests
 
-      - name: Build and run Docker Compose
-        run: |
-          docker compose up --build -d
-        env:
-          SPRING_PROFILES_ACTIVE: default
-          DATABASE_URL: jdbc:postgresql://postgres:5432/blog-rest-api
-          DATABASE_USER: postgres
-          DATABASE_PASSWORD: postgres
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/blog-rest-api:${{ github.sha }} .
+
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/blog-rest-api:${{ github.sha }}
